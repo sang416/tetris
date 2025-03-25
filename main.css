@@ -1,0 +1,108 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f5f5f5;
+}
+
+.tetris-board {
+  display: grid;
+  grid-template-columns: repeat(10, 30px);
+  grid-template-rows: repeat(20, 30px);
+  gap: 1px;
+  background-color: #222;
+  border: 2px solid #333;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.tetris-cell {
+  width: 30px;
+  height: 30px;
+  background-color: #111;
+  border-radius: 2px;
+}
+
+.next-piece-container {
+  background-color: #222;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.next-piece {
+  display: grid;
+  grid-template-columns: repeat(4, 25px);
+  grid-template-rows: repeat(4, 25px);
+  gap: 1px;
+  background-color: #333;
+  margin: 10px auto;
+}
+
+.next-piece-cell {
+  width: 25px;
+  height: 25px;
+  border-radius: 2px;
+}
+
+/* 블록 색상 */
+.block-color-1 {
+  background-color: #FF0000; /* 빨강 */
+  border: 2px solid #CC0000;
+  box-shadow: inset 2px 2px #FF5555;
+}
+
+.block-color-2 {
+  background-color: #00FF00; /* 초록 */
+  border: 2px solid #00CC00;
+  box-shadow: inset 2px 2px #55FF55;
+}
+
+.block-color-3 {
+  background-color: #0000FF; /* 파랑 */
+  border: 2px solid #0000CC;
+  box-shadow: inset 2px 2px #5555FF;
+}
+
+.block-color-4 {
+  background-color: #FFFF00; /* 노랑 */
+  border: 2px solid #CCCC00;
+  box-shadow: inset 2px 2px #FFFF55;
+}
+
+.block-color-5 {
+  background-color: #FF00FF; /* 보라 */
+  border: 2px solid #CC00CC;
+  box-shadow: inset 2px 2px #FF55FF;
+}
+
+.block-color-6 {
+  background-color: #00FFFF; /* 청록 */
+  border: 2px solid #00CCCC;
+  box-shadow: inset 2px 2px #55FFFF;
+}
+
+.game-over {
+  color: red;
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* 버튼 스타일 */
+.btn {
+  font-size: 1.1rem;
+  padding: 8px 20px;
+}
+
+.btn-primary, .btn-warning {
+  border-radius: 5px;
+}
+
+@media (max-width: 768px) {
+  .tetris-board {
+    grid-template-columns: repeat(10, 25px);
+    grid-template-rows: repeat(20, 25px);
+  }
+  
+  .tetris-cell {
+    width: 25px;
+    height: 25px;
+  }
+}
