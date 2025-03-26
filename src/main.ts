@@ -145,6 +145,64 @@ class Tetris {
           break;
       }
     });
+
+    // 터치 이벤트 처리
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+
+    this.tetrisBoard.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].clientX;
+      touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+
+    this.tetrisBoard.addEventListener('touchmove', (e) => {
+      touchEndX = e.touches[0].clientX;
+      touchEndY = e.touches[0].clientY;
+    }, { passive: true });
+
+    this.tetrisBoard.addEventListener('touchend', (e) => {
+      if (this.isPaused || this.isGameOver) return;
+
+      const deltaX = touchEndX - touchStartX;
+      const deltaY = touchEndY - touchStartY;
+
+      // 최소 스와이프 거리 설정
+      const minSwipeDistance = 30;
+
+      // 수평 스와이프
+      if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        if (Math.abs(deltaX) > minSwipeDistance) {
+          if (deltaX > 0) {
+            this.moveRight();
+          } else {
+            this.moveLeft();
+          }
+        }
+      }
+      // 수직 스와이프
+      else {
+        if (Math.abs(deltaY) > minSwipeDistance) {
+          if (deltaY > 0) {
+            this.moveDown();
+          } else {
+            this.rotate();
+          }
+        }
+      }
+    }, { passive: true });
+
+    // 더블 탭으로 즉시 떨어뜨리기
+    let lastTap = 0;
+    this.tetrisBoard.addEventListener('touchend', (e) => {
+      const currentTime = new Date().getTime();
+      const tapLength = currentTime - lastTap;
+      if (tapLength < 500 && tapLength > 0) {
+        this.dropDown();
+      }
+      lastTap = currentTime;
+    }, { passive: true });
   }
 
   private getRandomPiece(): BlockType {
