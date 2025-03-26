@@ -9,7 +9,7 @@ enum BlockType {
 
 class Tetris {
   private readonly COLS: number = 10;
-  private readonly ROWS: number = 20;
+  private readonly ROWS: number = 15;
   private readonly BLOCK_COLORS: number = 6;
   private readonly TETROMINOS: number[][][][] = [
     // I
@@ -420,13 +420,21 @@ class Tetris {
   }
 
   private startGame(): void {
+    console.log("Start button clicked");
+    console.log("gameInterval :", this.gameInterval);
+    console.log("this.speedDelay :", this.speedDelay);
+
     if (this.isGameOver) {
       this.resetGame();
     }
     
     if (!this.gameInterval) {
+      console.log("gameInterval is null");
+      console.log("this.speedDelay :", this.speedDelay);
       this.gameInterval = window.setInterval(() => this.gameLoop(), this.speedDelay);
       this.startButton.textContent = '재시작';
+    } else {
+      this.resetGame();
     }
   }
 

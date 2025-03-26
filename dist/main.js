@@ -12,7 +12,7 @@ var Tetris = /** @class */ (function () {
     function Tetris() {
         var _this = this;
         this.COLS = 10;
-        this.ROWS = 20;
+        this.ROWS = 15;
         this.BLOCK_COLORS = 6;
         this.TETROMINOS = [
             // I
@@ -360,12 +360,20 @@ var Tetris = /** @class */ (function () {
     };
     Tetris.prototype.startGame = function () {
         var _this = this;
+        console.log("Start button clicked");
+        console.log("gameInterval :", this.gameInterval);
+        console.log("this.speedDelay :", this.speedDelay);
         if (this.isGameOver) {
             this.resetGame();
         }
         if (!this.gameInterval) {
+            console.log("gameInterval is null");
+            console.log("this.speedDelay :", this.speedDelay);
             this.gameInterval = window.setInterval(function () { return _this.gameLoop(); }, this.speedDelay);
             this.startButton.textContent = '재시작';
+        }
+        else {
+            this.resetGame();
         }
     };
     Tetris.prototype.resetGame = function () {
