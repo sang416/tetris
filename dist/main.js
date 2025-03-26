@@ -70,7 +70,7 @@ var Tetris = /** @class */ (function () {
         this.level = 1;
         this.isPaused = false;
         this.isGameOver = false;
-        this.speedDelay = 1000;
+        this.speedDelay = 700;
         this.nextPiece = this.getRandomPiece();
         this.currentPiece = this.createNewPiece();
         this.initBoard();
@@ -329,6 +329,7 @@ var Tetris = /** @class */ (function () {
                 // 맨 위에 새 행 추가
                 this.board.unshift(Array(this.COLS).fill(0));
                 rowsCleared++;
+                console.log("rowsCleared :", rowsCleared);
                 row++; // 내려온 행을 다시 검사
             }
         }
@@ -338,7 +339,7 @@ var Tetris = /** @class */ (function () {
     };
     Tetris.prototype.updateScore = function (rowsCleared) {
         var _this = this;
-        var points = [0, 40, 100, 300, 1200];
+        var points = [0, 100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600, 51200, 102400];
         this.score += points[rowsCleared] * this.level;
         this.scoreElement.textContent = this.score.toString();
         // 레벨 업

@@ -86,7 +86,7 @@ class Tetris {
     this.level = 1;
     this.isPaused = false;
     this.isGameOver = false;
-    this.speedDelay = 1000;
+    this.speedDelay = 700;
     
     this.nextPiece = this.getRandomPiece();
     this.currentPiece = this.createNewPiece();
@@ -377,7 +377,6 @@ class Tetris {
 
   private clearRows(): void {
     let rowsCleared = 0;
-    
     for (let row = this.ROWS - 1; row >= 0; row--) {
       if (this.board[row].every(cell => cell !== 0)) {
         // 행 제거
@@ -385,6 +384,7 @@ class Tetris {
         // 맨 위에 새 행 추가
         this.board.unshift(Array(this.COLS).fill(0));
         rowsCleared++;
+        console.log("rowsCleared :", rowsCleared);
         row++; // 내려온 행을 다시 검사
       }
     }
@@ -395,7 +395,7 @@ class Tetris {
   }
 
   private updateScore(rowsCleared: number): void {
-    const points = [0, 40, 100, 300, 1200];
+    const points = [0, 100, 200, 400, 800, 1600, 3200, 6400, 12800, 25600, 51200, 102400];
     this.score += points[rowsCleared] * this.level;
     this.scoreElement.textContent = this.score.toString();
     
