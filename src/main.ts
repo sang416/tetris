@@ -413,6 +413,7 @@ class Tetris {
   }
 
   private gameLoop(): void {
+    // console.log("this.gameInterval :", this.gameInterval);
     if (!this.isPaused && !this.isGameOver) {
       this.moveDown();
     }

@@ -124,6 +124,59 @@ var Tetris = /** @class */ (function () {
                     break;
             }
         });
+        // 터치 이벤트 처리
+        var touchStartX = 0;
+        var touchStartY = 0;
+        var touchEndX = 0;
+        var touchEndY = 0;
+        this.tetrisBoard.addEventListener('touchstart', function (e) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        }, { passive: true });
+        this.tetrisBoard.addEventListener('touchmove', function (e) {
+            touchEndX = e.touches[0].clientX;
+            touchEndY = e.touches[0].clientY;
+        }, { passive: true });
+        this.tetrisBoard.addEventListener('touchend', function (e) {
+            if (_this.isPaused || _this.isGameOver)
+                return;
+            var deltaX = touchEndX - touchStartX;
+            var deltaY = touchEndY - touchStartY;
+            // 최소 스와이프 거리 설정
+            var minSwipeDistance = 30;
+            // 수평 스와이프
+            if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                if (Math.abs(deltaX) > minSwipeDistance) {
+                    if (deltaX > 0) {
+                        _this.moveRight();
+                    }
+                    else {
+                        _this.moveLeft();
+                    }
+                }
+            }
+            // 수직 스와이프
+            else {
+                if (Math.abs(deltaY) > minSwipeDistance) {
+                    if (deltaY > 0) {
+                        _this.moveDown();
+                    }
+                    else {
+                        _this.rotate();
+                    }
+                }
+            }
+        }, { passive: true });
+        // 더블 탭으로 즉시 떨어뜨리기
+        var lastTap = 0;
+        this.tetrisBoard.addEventListener('touchend', function (e) {
+            var currentTime = new Date().getTime();
+            var tapLength = currentTime - lastTap;
+            if (tapLength < 500 && tapLength > 0) {
+                _this.dropDown();
+            }
+            lastTap = currentTime;
+        }, { passive: true });
     };
     Tetris.prototype.getRandomPiece = function () {
         return Math.floor(Math.random() * Object.keys(BlockType).length / 2);
@@ -300,6 +353,7 @@ var Tetris = /** @class */ (function () {
         }
     };
     Tetris.prototype.gameLoop = function () {
+        // console.log("this.gameInterval :", this.gameInterval);
         if (!this.isPaused && !this.isGameOver) {
             this.moveDown();
         }
