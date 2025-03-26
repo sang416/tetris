@@ -138,7 +138,7 @@ var Tetris = /** @class */ (function () {
             touchEndY = e.touches[0].clientY;
         }, { passive: true });
         this.tetrisBoard.addEventListener('touchend', function (e) {
-            if (_this.isPaused || _this.isGameOver)
+            if (_this.isGameOver || _this.isPaused)
                 return;
             var deltaX = touchEndX - touchStartX;
             var deltaY = touchEndY - touchStartY;
@@ -170,6 +170,8 @@ var Tetris = /** @class */ (function () {
         // 더블 탭으로 즉시 떨어뜨리기
         var lastTap = 0;
         this.tetrisBoard.addEventListener('touchend', function (e) {
+            if (_this.isGameOver || _this.isPaused)
+                return;
             var currentTime = new Date().getTime();
             var tapLength = currentTime - lastTap;
             if (tapLength < 500 && tapLength > 0) {
